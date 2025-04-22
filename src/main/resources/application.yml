@@ -1,0 +1,56 @@
+server:
+  port: 10000
+
+#JDBC
+#spring:
+#  datasource:
+#    driver-class-name: oracle.jdbc.OracleDriver
+#    url: jdbc:oracle:thin:@//localhost:1521/XE
+#    username: hr
+#    password: 1234
+
+# mybatis
+spring:
+  datasource:
+    hikari:
+      driver-class-name: oracle.jdbc.OracleDriver
+      jdbc-url: jdbc:oracle:thin:@//localhost:1521/XE
+      username: hr
+      password: 1234
+  ssl:
+    enabled: true
+  mvc:
+    cors:
+      mappings:
+        "/**":
+          allowed-origins: "http://localhost:3000"
+          allowed-methods: "*"
+          allowed-headers: "*"
+          allow-credentials: true
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  servlet:
+    multipart:
+      location: "C:/upload"
+      enabled: true
+      max-request-size: 40MB
+      max-file-size: 40MB
+      file-size-threshold: 100MB
+
+
+
+api:
+  base-url: "https://apis.data.go.kr/B551011/KorPetTourService"
+  base-url2: "https://api.odcloud.kr/api"
+  congestion-20171231 : "/15071311/v1/uddi:a5158b81-27c7-4151-ba6c-b912a6f13d39"
+  area-based-list: "/areaBasedList"
+  service-key: "your_service_key"
+
+
+thymeleaf:
+  prefix=classpath: templates/
+  suffix: .html
+  check-template-location: true
+  cache: false
+  mvc:
+    static-path-pattern: "/static/**"

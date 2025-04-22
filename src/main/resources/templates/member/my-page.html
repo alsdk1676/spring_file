@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>마이페이지</title>
+    <style>
+        #container {
+            width: 500px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #submit-button {
+            margin: 16px 0 0 0;
+            width: 300px;
+            height: 60px;
+        }
+
+        input[name='uploadFile'] {
+            display: none;
+        }
+
+        lable {
+            cursor: pointer;
+        }
+
+        div.image {
+            width: 160px;
+            height: 160px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        div.image img {
+            width: 100%;
+        }
+
+        div.cancel {
+            display: none;
+            cursor: pointer;
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            width: 32px;
+            height: 32px;
+            background-image: url("/images/cancel.png");
+            background-size: 100%;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div>
+            <div class="image">
+                <label for="profile1">
+                    <img class="image1" src="/images/no_member.jpg" />
+                </label>
+                <div class="cancel image1"></div>
+            </div>
+            <div class="image">
+                <label for="profile2">
+                    <img class="image2" src="/images/no_member.jpg" />
+                </label>
+                <div class="cancel image2"></div>
+            </div>
+            <div class="image">
+                <label for="profile3">
+                    <img class="image3" src="/images/no_member.jpg" />
+                </label>
+                <div class="cancel image3"></div>
+            </div>
+        </div>
+        <button id="submit-button" type="button">이미지 변경 완료</button>
+    </div>
+
+    <form th:action="@{/member/my-page}" name="file-form" method="post" enctype="multipart/form-data">
+<!--        name : uploadFile로 한번에 받음 -->
+        <input type="file" id="profile1" name="uploadFile" class="image1"/>
+        <input type="file" id="profile2" name="uploadFile" class="image2"/>
+        <input type="file" id="profile3" name="uploadFile" class="image3"/>
+    </form>
+</body>
+<script>
+    const files = document.querySelectorAll("input[name='uploadFile']")
+    const cancels = document.querySelectorAll("div.cancel")
+    const submitButton = document.querySelector("#submit-button")
+    const form = document.querySelector("form[name='file-form']")
+
+//     버튼 전송 (경로 집어넣음)
+    submitButton.addEventListener("click", () => {
+        form.submit()
+    })
+
+//     이미지 변경 시 이벤트 (경로를 가져옴)
+    files.forEach((file) => {
+        file.addEventListener("change", (e) => {
+            const className = e.target.className
+            const file = e.target.files[0]
+            const name = file.name
+            const formData = new FormData()
+            // console.log(className)
+            // console.log(file)
+            // console.log(name)
+            formData.append("uploadFile", file)
+
+            // 이미지가 바뀔 때마다 경로 요청
+            fetch("/file/upload", {
+                method : "POST",
+                body : formData
+            })
+                .then((res) => res.json())
+                .then((uuids) => {
+                    console.log(uuids)
+                })
+                .catch()
+        })
+    })
+
+</script>
+</html>
