@@ -118,8 +118,37 @@
                 .then((res) => res.json())
                 .then((uuids) => {
                     console.log(uuids)
+                    let now = new Date()
+                    let year = now.getFullYear();
+                    let month = now.getMonth() + 1;
+                    let date = now.getDate();
+                    month = month < 10 ? "0" + month : month;
+                    date = date < 10 ? "0" + date : date;
+
+                    let fileName = `${year}/${month}/${date}/t_${uuids[0]}_${name}`
+                    // console.log(fileName)
+                    document.querySelector(`img.${className}`).setAttribute("src", `/file/display?fileName=${fileName}`)
+                    document.querySelector(`div.${className}`).style.display = 'block'
+
+                    let input = document.createElement("input")
+                    input.name = "uuid"
+                    input.value = uuids[0]
+                    input.type = "hidden"
+                    form.append(input)
+                    console.log(uuids)
                 })
                 .catch()
+        })
+    })
+
+    cancels.forEach((cancel) => {
+        cancel.addEventListener("click", (e) => {
+            const className = e.target.classList[1];
+            e.target.style.display = 'none'
+
+            // 기존에 유저가 가지고 있던 정보가 ("src", ~~~)
+            document.querySelector(`img.${className}`).setAttribute("src", `/images/no_member.jpg`)
+            document.querySelector(`input.${className}`).vallue = ""
         })
     })
 

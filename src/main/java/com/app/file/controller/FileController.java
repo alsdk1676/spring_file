@@ -4,10 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnailator;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -59,6 +57,12 @@ public class FileController {
 //        uuid 보내기
         log.info("uuids : {}", uuids.toString());
         return uuids; // 프론트로 보냄
+    }
 
+//    경로 노출 X
+    @GetMapping("display")
+    @ResponseBody
+    public byte[] display(String fileName) throws IOException {
+        return FileCopyUtils.copyToByteArray(new File("C:/upload/" + fileName));
     }
 }

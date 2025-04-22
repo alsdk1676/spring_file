@@ -7,5 +7,6 @@
 
     <typeAliases>
         <typeAlias type="com.app.file.domain.MemberVO" alias="MemberVO" />
+        <typeAlias type="com.app.file.domain.FileVO" alias="FileVO" />
     </typeAliases>
 </configuration>

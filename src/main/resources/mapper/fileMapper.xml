@@ -3,6 +3,14 @@
 <!-- 자바의 인터페이스랑 연결 -->
 <mapper namespace="com.app.file.mapper.FileMapper">
 
+    <insert id="insert" parameterType="FileVO">
+        INSERT INTO TBL_FILE
+        VALUES (SEQ_FILE.NEXTVAL, #{fileName}, #{filePath})
+    </insert>
 
+    <select id="selectAll" resultType="FileVO">
+        SELECT ID, FILE_NAME, FILE_PATH
+        FROM TBL_FILE
+    </select>
 
 </mapper>

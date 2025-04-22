@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>디테일</title>
+</head>
+<body>
+    <h1>파일 등록 완료!</h1>
+    <th:block th:each="file : ${files}">
+        <div>
+            <img th:src="@{/file/display(fileName=${file.filePath} + '/' + ${file.fileName})}"/>
+        </div>
+    </th:block>
+
+</body>
+</html>
